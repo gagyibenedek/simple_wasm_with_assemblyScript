@@ -1,0 +1,27 @@
+<html>
+    <body>
+        <script>
+            function simpleFib(n) {
+                let i, t, a = 0, b = 1;
+                for (i = 0; i < n; i++) {
+                    t = a + b; a = b; b = t;
+                }
+                return b;
+            }
+
+            function timer(fn, input) {
+                console.time("timer");
+                fn(input);
+                console.timeEnd("timer");
+            }
+
+            fetch('fib.wasm').then(response =>
+            response.arrayBuffer()
+          ).then(bytes =>
+            WebAssembly.instantiate(bytes, {imports: {}})
+          ).then(results => {
+            window.fib = results.instance.exports.fib;
+          });
+        </script>
+    </body>
+</html>
